@@ -6,6 +6,10 @@ import { GoogleOAuthProvider } from '@react-oauth/google';
 
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import { Dashboard } from './pages/dashboard/Dashboard.jsx';
+import Text from './pages/text/Text.jsx';
+import Table from './pages/table/Table.jsx';
+import { AuthProvider } from './utils/UserContext.jsx';
+
 
 const router = createBrowserRouter([
   {
@@ -14,14 +18,26 @@ const router = createBrowserRouter([
   },
   {
     path: "/dashboard",
-    element: <Dashboard/>
+    element: <Dashboard/>,
+    children: [
+      {
+        path: "/dashboard/text",
+        element: <Text/>
+      },
+      {
+        path: "/dashboard/table",
+        element: <Table/>
+      }
+    ]
   }
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <GoogleOAuthProvider clientId="">
-    <React.StrictMode>
-      <RouterProvider router={router}/>
-    </React.StrictMode>
+  <GoogleOAuthProvider clientId={import.meta.env.VITE_CLIENT_ID}>
+      <React.StrictMode>
+        <AuthProvider>
+            <RouterProvider router={router}/>
+        </AuthProvider>
+      </React.StrictMode>
   </GoogleOAuthProvider>
 )

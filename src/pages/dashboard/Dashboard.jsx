@@ -1,46 +1,61 @@
 import React from 'react'
-import { useState, useRef, useEffect } from 'react'
-import { createWorker } from 'tesseract.js';
+import { useState, useEffect } from 'react';
+import { Link, Outlet, useNavigate } from 'react-router-dom';
+import { useAuth } from '../../utils/UserContext';
 
 export const Dashboard = () => {
-    const [file, setFile] = useState(null);
-    const workerRef = useRef(null);
-    const [ocrResult, setOcrResult] = useState('');
+    const [sidebarItem, setsidebarItem] = useState('Text')
+    const { user, userlogout } = useAuth();
+    const [name, setName] = useState('');
+    const navigate = useNavigate();
 
-    function getFile(e) {
-        setFile(URL.createObjectURL(e.target.files[0]));
+    const handleSidebar = (e) => {
+        setsidebarItem(e.target.textContent);
     }
 
-    const initWorker = async () => {
-        workerRef.current = await createWorker('eng');
+    const handleLogout = () => {
+        navigate('/');
+        userlogout();
     }
+
     useEffect(() => {
-        initWorker();
-    }, []);
+      const fetchUserData = async () => {
+        try {
+          const userData = await user; // Wait for the user promise to resolve
+          setName(userData.name); // Access the name property once the promise resolves
+        } catch (error) {
+          console.error('Error fetching user data:', error);
+        }
+      };
+  
+      fetchUserData();
+    }, [user]);
 
-    const handleExtract = async () => {
-        const worker = workerRef.current;       
-        const response = await worker.recognize(file);
-        setOcrResult(response.data.text);
-        console.log(response.data);
-    };    
-
+    
     return (
         <div className='container w-full h-screen overflow-y-scroll bg-slate-900'>
-            <div className=" nav w-full h-14 flex flex-wrap items-center justify-between p-4 bg-slate-800 content-center frosted sticky top-0 bg-opacity-40">
+            <div className=" nav w-full h-[11vh] flex flex-wrap items-center justify-between p-4 bg-blue-800 content-center frosted sticky top-0 bg-opacity-40">
                 <h1 className="text-slate-300 font-sans font-bold">Dashboard</h1>
+                <button className="text-slate-300 font-sans font-bold" onClick={handleLogout}>Welcome, {name? name : "Logout"}</button>
             </div>
-            <div className='text-slate-100 w-3/4 p-4 flex flex-col mx-auto'>
-                <br/>
-                <label className="block mb-2 text-xl text-gray-900 font-medium dark:text-white" for="file_input">Upload file</label>
-                <input className="block w-full text-sm text-gray-900 border border-gray-300 mx-auto rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" id="file_input" type="file" onChange={getFile}/>
-                <br/>
-                <img src={file} className='w-1/2 mx-auto'></img>
-                <br/>
-                {file && <button type="button" onClick={handleExtract} class="text-white bg-gray-800 hover:bg-gray-900 w-1/4 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 mx-auto dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">Extract</button>}
-                <br/>
-                <label for="message" class="block mb-2 text-xl font-medium text-gray-900 dark:text-white">Detected Text</label>
-                <textarea id="message" rows="4" class="block p-2.5 w-full text-sm mx-auto text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Text" value={ocrResult}></textarea>
+            <div className='grid grid-cols-5 h-[89vh] bg-gradient-to-b from-blue-900 via-indigo-800 to-slate-900'>
+                <div className="sidebar col-span-1 isolate bg-white/5 shadow-lg ring-1 ring-black/5 flex flex-col gap-2 items-center">
+                    <Link 
+                        to="/dashboard/text" 
+                        className={`text-slate-300 font-sans font-bold mt-4 hover:bg-blue-600 rounded-md px-20 py-2 ${sidebarItem === 'Text' ? 'bg-blue-600 rounded-md px-20 py-2' : ''}`}
+                        onClick={handleSidebar}
+                    >
+                        Text
+                    </Link>
+                    <Link 
+                        to="/dashboard/table" 
+                        className={`text-slate-300 font-sans font-bold mt-4 hover:bg-blue-600 rounded-md px-20 py-2 ${sidebarItem === 'Table' ? 'bg-blue-600 rounded-md px-20 py-2' : ''}`} 
+                        onClick={handleSidebar}
+                    >
+                        Table
+                    </Link>
+                </div>
+                <div className="outlet col-span-4 bg-gradient-to-b from-blue-900 via-indigo-800 to-slate-900 overflow-y-scroll"><Outlet/></div>
             </div>
         </div>
     )
