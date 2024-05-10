@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
-import './style.css';
+import './output.css';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
@@ -9,6 +9,7 @@ import { Dashboard } from './pages/dashboard/Dashboard.jsx';
 import Text from './pages/text/Text.jsx';
 import Table from './pages/table/Table.jsx';
 import { AuthProvider } from './utils/UserContext.jsx';
+import ProtectedRoute from './utils/ProtectRoute.jsx';
 
 
 const router = createBrowserRouter([
@@ -18,7 +19,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/dashboard",
-    element: <Dashboard/>,
+    element: <ProtectedRoute><Dashboard/></ProtectedRoute>,
     children: [
       {
         path: "/dashboard/text",

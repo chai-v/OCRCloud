@@ -16,6 +16,7 @@ export const Login = () => {
               });
             const user = {
                 name: response.data.name,
+                token: tokenResponse.access_token
             }
             return user;
         } catch (error) {
@@ -25,7 +26,7 @@ export const Login = () => {
     const login = useGoogleLogin({
         onSuccess: tokenResponse => {
             console.log(tokenResponse);
-            navigate('/dashboard/Text');
+            navigate('/dashboard/text');
             userlogin(onLogin(tokenResponse));
         },
         onError: error => {
@@ -36,7 +37,7 @@ export const Login = () => {
     return (
         <div className=''>
             <div className="flex h-auto w-auto items-center overflow-visible px-2">
-                <div className="relative flex items-center w-96 flex-col space-y-5 rounded-lg border bg-white px-5 py-10 shadow-xl sm:mx-auto">
+                <div className="relative flex items-center w-72 md:w-96 flex-col space-y-5 rounded-lg border bg-white px-5 py-10 shadow-xl sm:mx-auto">
                     <div className="mx-auto mb-2 space-y-3">
                         <h1 className="text-center text-3xl font-bold text-gray-700">Sign in</h1>
                         <p className="text-gray-500">Login with Google Account</p>
