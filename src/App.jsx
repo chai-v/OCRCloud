@@ -29,7 +29,7 @@ function App() {
           </a>
         </div>
       
-        <div className={`content w-full h-screen ${isMobile ? 'flex flex-wrap flex-col items-center content-center px-8 py-32 gap-28' : 'px-12 pb-16 grid grid-cols-3'}`}>
+        <div className={`content w-full h-screen ${isMobile ? 'flex overflow-y-scroll no-scrollbar flex-col items-center content-center px-8 py-32 gap-28' : 'px-12 pb-16 grid grid-cols-3'}`}>
           <div className="text-slate-300 md:col-span-2 font-sans font-bold flex items-center">
             <div className="gap-6 text-center md:text-left">
               <h1 className="text-5xl">Unlock the power of <span className="text-blue-500">OCR</span></h1>
