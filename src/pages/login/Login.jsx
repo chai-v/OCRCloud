@@ -1,5 +1,5 @@
 import { useGoogleLogin } from '@react-oauth/google';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../utils/UserContext';
 import axios from 'axios';
 
@@ -46,6 +46,9 @@ export const Login = () => {
                         <div class="icons8-google"></div>
                         <span>Sign in with Google</span>
                     </button>
+                    <Link to="/privacy">
+                        Privacy Policy
+                    </Link>
                 </div>
             </div>
         </div>

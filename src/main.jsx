@@ -8,6 +8,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import { Dashboard } from './pages/dashboard/Dashboard.jsx';
 import Text from './pages/text/Text.jsx';
 import Table from './pages/table/Table.jsx';
+import Privacy from './pages/privacy/Privacy.jsx';
 import { AuthProvider } from './utils/UserContext.jsx';
 import ProtectedRoute from './utils/ProtectRoute.jsx';
 
@@ -30,6 +31,10 @@ const router = createBrowserRouter([
         element: <Table/>
       }
     ]
+  },
+  {
+    path: "/privacy",
+    element: <Privacy/>
   }
 ]);
 
