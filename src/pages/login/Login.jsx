@@ -26,7 +26,7 @@ export const Login = () => {
     const login = useGoogleLogin({
         onSuccess: tokenResponse => {
             console.log(tokenResponse);
-            navigate('/dashboard/text');
+            navigate('/dashboard/home');
             userlogin(onLogin(tokenResponse));
         },
         onError: error => {

@@ -11,6 +11,7 @@ import Table from './pages/table/Table.jsx';
 import Privacy from './pages/privacy/Privacy.jsx';
 import { AuthProvider } from './utils/UserContext.jsx';
 import ProtectedRoute from './utils/ProtectRoute.jsx';
+import Home from './pages/home/Home.jsx';
 
 
 const router = createBrowserRouter([
@@ -22,6 +23,10 @@ const router = createBrowserRouter([
     path: "/dashboard",
     element: <ProtectedRoute><Dashboard/></ProtectedRoute>,
     children: [
+      {
+        path: "/dashboard/home",
+        element: <Home/>
+      },
       {
         path: "/dashboard/text",
         element: <Text/>
