@@ -64,12 +64,6 @@ const Privacy = () =>{
                     <h2>Your Choices</h2>
                     <p className="text-base mb-8">You can revoke access to your Google Account information at any time by visiting your Google Account settings. You can also delete documents created or edited by the App through the App's dashboard.</p>
 
-                    <h2>Children's Privacy</h2>
-                    <p className="text-base mb-8">Our App is not intended for children under 13. We do not knowingly collect personal information from children under 13. If you are a parent or guardian and you believe your child has provided us with personal information, please contact us. We will take steps to delete the information from our servers.</p>
-
-                    <h2>Changes to this Privacy Policy</h2>
-                    <p className="text-base mb-8">We may update this Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy on this page.</p>
-
                     <h2>Contact Us</h2>
                     <p className="text-base mb-8">If you have any questions about this Privacy Policy, please contact us at chaitanya.vengali@gmail.com</p>
                   </div>
